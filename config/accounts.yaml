@@ -1,0 +1,10 @@
+accounts:
+  - name: atlas-production
+    id: "757706350067"
+    email: atlas-production@effectual.com
+    console_url: https://effectual-sandbox.awsapps.com/start/#/console?account_id=757706350067&referrer=accessPortal
+
+  - name: atlas-staging
+    id: "637616607776"
+    email: atlas-staging@effectual.com
+    console_url: https://effectual-sandbox.awsapps.com/start/#/console?account_id=637616607776&referrer=accessPortal

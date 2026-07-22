@@ -1,0 +1,16 @@
+defaults:
+  download_root: data/raw
+  manifest_path: data/raw/manifest.json
+
+sources:
+  - name: atlas-production-raw
+    environment: production
+    account_id: "757706350067"
+    bucket: CHANGE_ME_PROD_BUCKET
+    prefix: raw/
+
+  - name: atlas-staging-raw
+    environment: staging
+    account_id: "637616607776"
+    bucket: effectual-atlas-landing-staging
+    prefix: udemy/user-course-activity/

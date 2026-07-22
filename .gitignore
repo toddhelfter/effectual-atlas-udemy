@@ -1,0 +1,26 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Data outputs
+/data/raw/
+/data/processed/
+/data/interim/
+/data/external/
+/sandbox/udemy/
+/sandbox/analysis/
+
+# Local config overrides and secrets
+.env
+config/s3_sources.local.yaml
+
+# Notebooks
+.ipynb_checkpoints/

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+INPUT_ROOT="${1:-data/raw/staging/atlas-staging-raw}"
+JSON_OUTPUT="${2:-data/interim/udemy/raw_parquet_summary.json}"
+CSV_OUTPUT="${3:-data/interim/udemy/raw_parquet_summary.csv}"
+
+PYTHONPATH="${PYTHONPATH:-}:src" python -m atlas_data.summarize_udemy_parquet \
+  --input-root "$INPUT_ROOT" \
+  --json-output "$JSON_OUTPUT" \
+  --csv-output "$CSV_OUTPUT"
