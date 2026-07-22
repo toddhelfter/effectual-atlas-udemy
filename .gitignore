@@ -15,6 +15,7 @@ dist/
 /data/processed/
 /data/interim/
 /data/external/
+/data/curated/
 /sandbox/udemy/
 /sandbox/analysis/
 
