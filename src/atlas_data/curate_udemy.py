@@ -64,6 +64,26 @@ def _hash_email(series: pd.Series, salt: str) -> pd.Series:
     return series.apply(hasher)
 
 
+def _hash_activity_key(
+    email_series: pd.Series,
+    course_id_series: pd.Series,
+    last_activity_series: pd.Series,
+    salt: str,
+) -> pd.Series:
+    def hasher(row: tuple[Any, Any, Any]) -> str | None:
+        email, course_id, last_activity = row
+        if pd.isna(email) or pd.isna(course_id) or pd.isna(last_activity):
+            return None
+
+        email_norm = str(email).strip().lower()
+        course_norm = str(course_id).strip()
+        activity_norm = str(last_activity).strip()
+        composite = f"{email_norm}|{course_norm}|{activity_norm}"
+        return hashlib.sha256(f"{salt}|{composite}".encode("utf-8")).hexdigest()
+
+    return pd.Series(zip(email_series, course_id_series, last_activity_series)).apply(hasher)
+
+
 def _primary_category(series: pd.Series) -> pd.Series:
     return (
         series.fillna("")
@@ -88,9 +108,17 @@ def curate_dataframe(
     hash_salt: str,
 ) -> pd.DataFrame:
     df = _ensure_fields(raw_df)
+    learner_email_hash = _hash_email(df["user_email"], hash_salt)
+    activity_key_hash = _hash_activity_key(
+        df["user_email"],
+        df["course_id"],
+        df["last_activity_date"],
+        hash_salt,
+    )
 
     curated = pd.DataFrame()
-    curated["learner_email_sha256"] = _hash_email(df["user_email"], hash_salt)
+    curated["learner_email_sha256"] = learner_email_hash
+    curated["activity_record_key_sha256"] = activity_key_hash
     curated["learner_given_name"] = df["user_name"].astype("string")
     curated["learner_surname"] = df["user_surname"].astype("string")
     curated["learner_role"] = df["user_role"].astype("string")

@@ -4,6 +4,7 @@
   "partition_keys": ["event_year", "event_month", "event_day"],
   "fields": [
     {"name": "learner_email_sha256", "type": "string"},
+    {"name": "activity_record_key_sha256", "type": "string", "nullable": true},
     {"name": "learner_given_name", "type": "string"},
     {"name": "learner_surname", "type": "string"},
     {"name": "learner_role", "type": "string"},

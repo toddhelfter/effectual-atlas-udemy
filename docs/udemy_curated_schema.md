@@ -8,6 +8,13 @@ This schema is the analytics-ready contract for curated Udemy user-course-activi
 
 One row per learner-course activity record in a day partition.
 
+## Key Model
+
+- Learner identifier key: `learner_email_sha256`
+- Activity record key: `activity_record_key_sha256`
+
+`activity_record_key_sha256` is derived from `lower(user_email) + course_id + last_activity_date` and is intended to provide stable record uniqueness for analytics use cases.
+
 ## Partitioning
 
 Curated output is partitioned by:
@@ -21,6 +28,7 @@ Curated output is partitioned by:
 | Field | Type | Description |
 | --- | --- | --- |
 | learner_email_sha256 | string | SHA256 hash of lowercased learner email using configured salt. |
+| activity_record_key_sha256 | string(nullable) | SHA256 hash of `lower(user_email)|course_id|last_activity_date` using configured salt. |
 | learner_given_name | string | Learner given name from source. |
 | learner_surname | string | Learner surname from source. |
 | learner_role | string | Learner role (for example student/admin). |
